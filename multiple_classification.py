@@ -66,7 +66,7 @@ if(selected == 'BMI'):
         bmi_prediction = bmi_model.predict([
             [
                 gender_map[person_gender],
-                float(height)
+                float(height),
                 float(weight)
             ]
         ])
@@ -154,6 +154,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
