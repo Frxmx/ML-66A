@@ -64,16 +64,20 @@ if selected == 'BMI':
     bmi_prediction = ''
     
     # จุดที่แก้: เปลี่ยนจาก ; เป็น : และจัดย่อหน้าให้ตรงกับตัวแปรด้านบน
-    if st.button('Predict'):
-        # โค้ดที่อยู่ข้างใน if button ต้องย่อหน้าเพิ่มเข้าไปอีก 1 ระดับ
-        prediction = bmi_model.predict([[gender, height, weight]])
-        
-        if prediction[0] <= 1: # ตัวอย่างเงื่อนไข
-            bmi_prediction = 'Underweight/Weak'
-        else:
-            bmi_prediction = 'Normal/Overweight'
-            
-        st.success(bmi_prediction)
+   if st.button('Predict'):
+    # แก้ไขให้เหลือเพียง 3 ค่าตามลำดับในตาราง: Gender, Height, Weight
+    # และใช้ชื่อตัวแปรให้ตรงกับที่รับค่ามาจากด้านบน
+    bmi_prediction = bmi_model.predict([
+        [
+            gender,          # ใช้ค่า 0 หรือ 1 จาก selectbox โดยตรง
+            float(height),   # ค่าส่วนสูง
+            float(weight)    # ค่าน้ำหนัก
+        ]
+    ])
+    
+    # ส่วนแสดงผลลัพธ์ (ตัวอย่างการ Map ค่ากลับจาก Index ในตาราง)
+    result = bmi_prediction[0]
+    st.success(f'ผลการทำนาย (Index): {result}')
 
 if(selected == 'Loan'):
     st.title('Loan Classification')
