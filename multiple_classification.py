@@ -56,28 +56,28 @@ default_map = {
 if selected == 'BMI':
     st.title('BMI Classification')
     
-    # ตรวจสอบว่าบรรทัดเหล่านี้มีระยะย่อหน้า (Indent) เท่ากัน
-    gender = st.selectbox('Gender', options=[0, 1])
-    height = st.number_input('Height (cm)', min_value=1, value=170)
-    weight = st.number_input('Weight (kg)', min_value=1, value=60)
+    # 1. รับค่า Input (ตรวจสอบให้แน่ใจว่าย่อหน้าเท่ากัน)
+    gender = st.selectbox('Gender', options=[0, 1], help="0: Female, 1: Male")
+    height = st.number_input('Height (cm)', min_value=1.0, value=170.0)
+    weight = st.number_input('Weight (kg)', min_value=1.0, value=60.0)
     
     bmi_prediction = ''
     
-    # จุดที่แก้: เปลี่ยนจาก ; เป็น : และจัดย่อหน้าให้ตรงกับตัวแปรด้านบน
-   if st.button('Predict'):
-    # แก้ไขให้เหลือเพียง 3 ค่าตามลำดับในตาราง: Gender, Height, Weight
-    # และใช้ชื่อตัวแปรให้ตรงกับที่รับค่ามาจากด้านบน
-    bmi_prediction = bmi_model.predict([
-        [
-            gender,          # ใช้ค่า 0 หรือ 1 จาก selectbox โดยตรง
-            float(height),   # ค่าส่วนสูง
-            float(weight)    # ค่าน้ำหนัก
-        ]
-    ])
-    
-    # ส่วนแสดงผลลัพธ์ (ตัวอย่างการ Map ค่ากลับจาก Index ในตาราง)
-    result = bmi_prediction[0]
-    st.success(f'ผลการทำนาย (Index): {result}')
+    # 2. ส่วนของปุ่ม Predict (ต้องย่อหน้าให้ตรงกับตัวแปรด้านบน)
+    if st.button('Predict'):
+        # ส่งค่าเข้าโมเดลตามลำดับในตาราง: Gender, Height, Weight
+        # ลบ gender_map และ person_gender ออก เพราะเราใช้ตัวแปร gender โดยตรง
+        prediction = bmi_model.predict([
+            [
+                gender, 
+                float(height), 
+                float(weight)
+            ]
+        ])
+        
+        # 3. แสดงผลลัพธ์ตามค่า Index (0, 1, 2, 3, 4) จากตาราง
+        result_index = prediction[0]
+        st.success(f'ผลการทำนาย (Index): {result_index}')
 
 if(selected == 'Loan'):
     st.title('Loan Classification')
@@ -152,6 +152,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
