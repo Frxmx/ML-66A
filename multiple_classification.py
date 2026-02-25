@@ -62,8 +62,7 @@ if(selected == 'BMI'):
     
     bmi_prediction = ''
     
-   if st.button('Predict')
-    # ใช้ชื่อตัวแปร gender ให้ตรงกับที่รับค่ามา และไม่ต้องมี gender_map
+   if st.button('Predict');
     bmi_prediction = bmi_model.predict([
         [
             gender, 
