@@ -57,7 +57,7 @@ if selected == 'BMI':
     st.title('BMI Classification')
     
     # 1. รับค่า Input (ตรวจสอบให้แน่ใจว่าย่อหน้าเท่ากัน)
-    gender = st.selectbox('Gender', options=[0, 1], help="0: Female, 1: Male")
+    gender = st.selectbox('Gender', options=[Female, Male], help="0: Female, 1: Male")
     height = st.number_input('Height (cm)', min_value=1.0, value=170.0)
     weight = st.number_input('Weight (kg)', min_value=1.0, value=60.0)
     
@@ -152,6 +152,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
