@@ -53,33 +53,27 @@ default_map = {
     'Yes': 1
 }
 
-if(selected == 'BMI'):
+if selected == 'BMI':
     st.title('BMI Classification')
     
-    gender = st.selectbox('Gender', options=[0, 1], help="0: หญิง, 1: ชาย (ตามโครงสร้างข้อมูลของคุณ)")
-    height = st.number_input('Height (cm)', min_value=0, value=170)
-    weight = st.number_input('Weight (kg)', min_value=0, value=60)
+    # ตรวจสอบว่าบรรทัดเหล่านี้มีระยะย่อหน้า (Indent) เท่ากัน
+    gender = st.selectbox('Gender', options=[0, 1])
+    height = st.number_input('Height (cm)', min_value=1, value=170)
+    weight = st.number_input('Weight (kg)', min_value=1, value=60)
     
     bmi_prediction = ''
     
-   if st.button('Predict');
-    bmi_prediction = bmi_model.predict([
-        [
-            gender, 
-            float(height), 
-            float(weight)
-        ]
-    ])
+    # จุดที่แก้: เปลี่ยนจาก ; เป็น : และจัดย่อหน้าให้ตรงกับตัวแปรด้านบน
+    if st.button('Predict'):
+        # โค้ดที่อยู่ข้างใน if button ต้องย่อหน้าเพิ่มเข้าไปอีก 1 ระดับ
+        prediction = bmi_model.predict([[gender, height, weight]])
         
-        if (bmi_prediction[0] == 0):
-            
-          bmi_prediction = 'Not Accept'
-          
+        if prediction[0] <= 1: # ตัวอย่างเงื่อนไข
+            bmi_prediction = 'Underweight/Weak'
         else:
+            bmi_prediction = 'Normal/Overweight'
             
-          bmi_prediction = 'Accept'
-          
-    st.success(bmi_prediction)
+        st.success(bmi_prediction)
 
 if(selected == 'Loan'):
     st.title('Loan Classification')
@@ -154,6 +148,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
